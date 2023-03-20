@@ -1,0 +1,229 @@
+#+TITLE: Bookmarklet Maker 
+#+DESCROPTION: tool to create bookmarklets for browser automation.
+#+KEYWORKDS: browser, automation, tool, bookmarklet, javascript, js
+#+STARTUP: content 
+
+* Bookmarklet Maker
+** Overviiew 
+
+Bookmarklet maker is a small web app to create bookmarklet or small
+executable Javascript apps to peform browser aumtomation tasks. 
+
+You can run this app by accessing the hyperlink: 
+
+ - http://caiorss.github.io/bookmarklet-maker 
+
+If you don't know what is a bookmarklet, see: 
+
+ - [[https://www.youtube.com/watch?v=K_A3Y3eqnzE][Creating a Simple Bookmarklet - YouTube]]
+
+** Bookmarklet Cheat Sheet 
+*** Get Metadata 
+**** Get current page title
+
+#+BEGIN_SRC html 
+<title>Paget Title</title>
+#+END_SRC
+
+#+BEGIN_SRC js
+document.title
+#+END_SRC
+
+**** Get author
+
+#+BEGIN_SRC html 
+ <meta content="author M.r dummy" name="author">
+#+END_SRC
+
+#+BEGIN_SRC js 
+  Array.from(document.getElementsByTagName("meta"))
+      .find(function(e){return e.name == "author"})
+      .content
+#+END_SRC
+
+**** Get description
+
+#+BEGIN_SRC html
+<meta content="A description of the page." name="description">
+#+END_SRC
+
+#+BEGIN_SRC js 
+  Array.from(document.getElementsByTagName("meta"))
+      .find(function(e){return e.name == "description"})
+      .content
+#+END_SRC
+
+**** Get keywords
+
+#+BEGIN_SRC html 
+  <meta content="keyword1 keyword2 keyword2" name="keywords">
+#+END_SRC
+
+#+BEGIN_SRC js 
+Array.from(document.getElementsByTagName("meta"))
+    .find(function(e){return e.name == "keywords"})
+    .content
+#+END_SRC
+
+**** Get current date
+
+#+BEGIN_SRC js
+> var d = new Date() ; (d.getYear() + 1900).toString() + "-" + d.getMonth().toString() + "-" + d.getDay().toString()
+"2016-9-4"
+#+END_SRC
+
+Function getDate()
+
+#+BEGIN_SRC js
+function getDate(){
+    var d = new Date();
+    return (d.getYear() + 1900).toString() + "-" +
+        d.getMonth().toString() + "-" + d.getDay().toString() ;
+}
+
+>> getDate()
+"2017-3-5"
+#+END_SRC
+
+*** Url
+**** Get current page URL
+
+#+BEGIN_SRC js 
+document.URL
+#+END_SRC
+
+**** Redirect current page
+
+#+BEGIN_SRC js 
+window.location.href = "http://www.httpbin.org/get"
+#+END_SRC
+
+**** Open url in a new tab
+
+#+BEGIN_SRC js 
+window.open("http://www.yandex.com")
+#+END_SRC
+
+**** URL manipulation 
+
+URL Manipulation is useful to send the current URL to some web service
+or Web App such as Google Driver or Web Archive. 
+
+ - Open some page that doesn't exist anymore in Web Archive: 
+
+#+BEGIN_SRC js
+var baseUrl = "https://web.archive.org/web/*/"
+var urlmod  = document.URL
+window.location.href = baseUrl + urlmod
+#+END_SRC
+
+
+ - Open a file google Driver. 
+
+Example URL: https://drive.google.com/viewerng/viewer?url=lampwww.epfl.ch/~hmiller/scala2014/proceedings/p51-prokopec.pdf
+
+#+BEGIN_SRC js
+var baseUrl = "http://lampwww.epfl.ch/~hmiller/scala2014/proceedings/p51-prokopec.pdf"
+var urlmod = "https://drive.google.com/viewerng/viewer?url=" + baseUrl
+window.open(urlmod)
+#+END_SRC
+
+Open current page (PDF document in Google Driver).
+
+#+BEGIN_SRC js 
+window.open("https://drive.google.com/viewerng/viewer?url=" + document.URL);
+#+END_SRC
+
+Open a prompt showing Google driver URL to current document. Useful to
+create short URL in services like tiny URL and view document in
+Tablets or Smartphones. 
+
+
+#+BEGIN_SRC js 
+prompt("Google driver URL:", "https://drive.google.com/viewerng/viewer?url=" + document.URL);
+#+END_SRC
+*** Misc 
+**** Display alert box (Messagebox)
+
+#+BEGIN_SRC js
+alert("My message");
+#+END_SRC
+
+**** Display a prompt
+
+ - The promopt function is useful to read user input and allow user to
+   copy some data.
+
+#+BEGIN_SRC js 
+prompt("Window title", "Content")
+#+END_SRC
+
+**** Display string in console 
+
+#+BEGIN_SRC js 
+console.log(object);
+console.log("My message");
+#+END_SRC
+
+*** Style 
+** Recipes
+*** Generate org-mode Bibliographical Reference
+
+#+BEGIN_SRC js 
+function getDate(){
+    var d = new Date()
+    return (d.getYear() + 1900).toString() + "-" +
+        d.getMonth().toString() + "-" + d.getDay().toString() ;
+};
+
+
+var text = '*' + document.title + '*' + " Accessed at " + getDate() +
+    ". Available at <" + document.URL + "> " ;
+
+prompt("Type Ctrl+A and Ctrl+C to copy the markdown", text);
+#+END_SRC
+
+It will generate a reference like this:
+
+ - *Overview of Forks, Threads, and Asynchronous I/O* Accessed at
+   2017-3-5. Available at
+   <http://www.remwebdevelopment.com/blog/overview-of-forks-threads-and-asynchronous-io-133.html>
+
+#+BEGIN_SRC org
+ - *Overview of Forks, Threads, and Asynchronous I/O* Accessed at 2017-3-5. Available at <http://www.remwebdevelopment.com/blog/overview-of-forks-threads-and-asynchronous-io-133.html> 
+#+END_SRC
+
+*** Change the page width for better readability 
+
+This will set the page width to the width of an A4 ISO paper sheet
+that makes easier to read long texts in the browser.
+
+#+BEGIN_SRC js
+document.querySelector("body").style.setProperty("width", "800px")
+#+END_SRC
+
+*** Invert page color for enhancing reading at night 
+
+#+BEGIN_SRC js 
+document.querySelector("body").style.setProperty("color", "white")
+document.querySelector("body").style.setProperty("background", "black")
+#+END_SRC
+
+*** Change page background color 
+
+#+BEGIN_SRC js 
+document.querySelector("body").style.setProperty("background", "white")
+#+END_SRC
+
+** See also:
+
+ - https://www.reddit.com/r/bookmarklets/
+
+ - [[http://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/][100+ Useful Bookmarklets For Better Productivity | Ultimate List - Hongkiat]]
+
+ - [[http://www.howtogeek.com/189358/beginner-geek-how-to-use-bookmarklets-on-any-device/][Beginner Geek: How to Use Bookmarklets on Any Device]]
+
+ - [[http://lifehacker.com/395697/top-10-useful-bookmarklets][Top 10 Useful Bookmarklets]]
+
+
+
