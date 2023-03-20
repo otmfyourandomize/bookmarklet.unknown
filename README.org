@@ -1,21 +1,17 @@
-#+TITLE: Bookmarklet Maker 
 #+DESCROPTION: tool to create bookmarklets for browser automation.
 #+KEYWORKDS: browser, automation, tool, bookmarklet, javascript, js
 #+STARTUP: content 
 
 * Bookmarklet Maker
-** Overviiew 
+** Overview 
 
 Bookmarklet maker is a small web app to create bookmarklet or small
 executable Javascript apps to peform browser aumtomation tasks. 
 
 You can run this app by accessing the hyperlink: 
 
- - http://caiorss.github.io/bookmarklet-maker 
+ - http://bookhanger.unknownweb.tk/
 
-If you don't know what is a bookmarklet, see: 
-
- - [[https://www.youtube.com/watch?v=K_A3Y3eqnzE][Creating a Simple Bookmarklet - YouTube]]
 
 ** Bookmarklet Cheat Sheet 
 *** Get Metadata 
